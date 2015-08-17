@@ -64,6 +64,14 @@
             <preference name="StatusBarOverlaysWebView" value="true" />
             <preference name="StatusBarStyle" value="lightcontent" />
         </config-file>
+        
+        <config-file target="*-Info.plist" parent="UIStatusBarHidden">
+            <true/>
+        </config-file>
+        
+        <config-file target="*-Info.plist" parent="UIViewControllerBasedStatusBarAppearance">
+            <false/>
+        </config-file>
 
         <header-file src="src/ios/CDVStatusBar.h" />
         <source-file src="src/ios/CDVStatusBar.m" />
