@@ -346,7 +346,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
     } else {
         UIApplication* app = [UIApplication sharedApplication];
-        [app setStatusBarHidden:YES withAnimation:YES];
+        [app setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     }
 }
 
@@ -389,7 +389,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
     } else {
         UIApplication* app = [UIApplication sharedApplication];
-        [app setStatusBarHidden:NO withAnimation:YES];
+        [app setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     }
 }
 
