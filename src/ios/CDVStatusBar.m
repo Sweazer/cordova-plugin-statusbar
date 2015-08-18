@@ -347,7 +347,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     [self _backgroundColorByHexString:value];
 }
 
-- (void) hideStatusBar
+- (void) hideStatusBar:(NSString*)animation
 {
     if (_uiviewControllerBasedStatusBarAppearance) {
         CDVViewController* vc = (CDVViewController*)self.viewController;
@@ -356,7 +356,14 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
     } else {
         UIApplication* app = [UIApplication sharedApplication];
-        [app setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+
+        if ([animation isEqualToString:@"fade"]) {
+            [app setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+        } else if ([animation isEqualToString:@"slide"]) {
+            [app setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+        } else if ([animation isEqualToString:@"none"]) {
+            [app setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+        }
     }
 }
 
@@ -368,7 +375,13 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     {
         CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
 
-        [self hideStatusBar];
+        NSString* animation = [command argumentAtIndex:0];
+        
+        if (!([animation isKindOfClass:[NSString class]])) {
+            animation = @"fade";
+        }
+
+        [self hideStatusBar:animation];
 
         if (IsAtLeastiOSVersion(@"7.0")) {
             [_statusBarBackgroundView removeFromSuperview];
@@ -389,7 +402,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     }
 }
 
-- (void) showStatusBar
+- (void) showStatusBar:(NSString*)animation
 {
     if (_uiviewControllerBasedStatusBarAppearance) {
         CDVViewController* vc = (CDVViewController*)self.viewController;
@@ -398,7 +411,14 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
     } else {
         UIApplication* app = [UIApplication sharedApplication];
-        [app setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+
+        if ([animation isEqualToString:@"fade"]) {
+            [app setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+        } else if ([animation isEqualToString:@"slide"]) {
+            [app setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+        } else if ([animation isEqualToString:@"none"]) {
+            [app setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+        }
     }
 }
 
@@ -410,7 +430,13 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     {
         BOOL isIOS7 = (IsAtLeastiOSVersion(@"7.0"));
 
-        [self showStatusBar];
+        NSString* animation = [command argumentAtIndex:0];
+
+        if (!([animation isKindOfClass:[NSString class]])) {
+            animation = @"fade";
+        }
+
+        [self showStatusBar:animation];
 
         if (isIOS7) {
             CGRect frame = self.webView.frame;
